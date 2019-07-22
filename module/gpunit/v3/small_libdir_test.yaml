@@ -1,0 +1,13 @@
+# 
+# Example data from <libdir>SmallTest.txt
+# Expected results from online documentation, circa v. 3 of module
+#
+name: ESPPredictor SmallTest from Libdir
+module: ESPPredictor
+params:
+    input.file: <libdir>SmallTest.txt
+assertions:
+    jobStatus: success
+    files:
+        Prediction.txt:
+            diff: Prediction.txt
