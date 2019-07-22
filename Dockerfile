@@ -2,11 +2,11 @@ FROM genepattern/docker-r-2-5
 
 COPY ./module /ESPPredictor
 COPY ./compiled /ESPPredictor/compiled
-COPY MCR_R2018a_glnxa64_installer.zip /MCR_R2018a_glnxa64_installer.zip
 RUN cd /ESPPredictor/lib  && \
     Rscript /ESPPredictor/lib/installit.R
 
 RUN mkdir /mcr && \
+    wget https://ssd.mathworks.com/supportfiles/downloads/R2018a/deployment_files/R2018a/installers/glnxa64/MCR_R2018a_glnxa64_installer.zip && \
     mv /MCR_R2018a_glnxa64_installer.zip /mcr
 
 RUN cd /mcr && \
