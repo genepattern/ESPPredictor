@@ -16,9 +16,12 @@
 #  }
 #}
 
-echo $1
-/ESPPredictor/run_matlab.sh $1
+# rename the input file to get around the compiled matlab not being happy with spaces in filenames
+cp "$1" input.txt
+/ESPPredictor/run_matlab.sh input.txt
 
 # presumably the R looks for a known local file
 Rscript /ESPPredictor/ESP_Predictor.R Predict ./PeptideFeatureSet.csv /ESPPredictor/ESP_Predictor_Model_020708.RData /ESPPredictor
+
+rm input.txt
 
