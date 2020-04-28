@@ -2,6 +2,7 @@
 <project basedir="" default="create-zip" name="ESPPredictor">
 
     <property name="dirOffset" value="../../common_module_code" />
+    <property name="module.src.dir" value="${module.repo.dir}/${module.name}/module"/>
     <import file="${dirOffset}/commontargets.xml" />
 
 	<target depends="init" name="create-zip">
