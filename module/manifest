@@ -22,6 +22,6 @@ p1_value=
 privacy=private
 quality=development
 taskType=Proteomics
-userid=gp-help@broad.mit.edu
-version=Building 4.0 version from git for docker
+userid=GPDemo
+version=build & test with Jenkins
 
