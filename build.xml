@@ -8,7 +8,7 @@
 	<target depends="init" name="create-zip">
 		<antcall target="prezip" />
 		<zip destfile="${dest.dir}/${ant.project.name}.zip" whenempty="fail" defaultexcludes="true">
-			<fileset dir="." includes="manifest" excludes="build.xml, *.version"/>
+			<fileset dir="module" includes="manifest" excludes="*.version"/>
             <fileset dir="lib" includes="*"/>
             <!-- <fileset dir="../common/R">
                 <include name="common.R"/>
