@@ -1,6 +1,6 @@
 FROM genepattern/docker-r-2-5
 
-COPY ./module /ESPPredictor
+COPY . /ESPPredictor
 COPY ./compiled /ESPPredictor/compiled
 RUN cd /ESPPredictor/lib  && \
     Rscript /ESPPredictor/lib/installit.R
