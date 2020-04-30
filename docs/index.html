@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html class="">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>ESPPredictor GenePattern Module</title>
+  <link href="./assets/docstyle.css" media="all" rel="stylesheet">
+  <style type="text/css"></style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="authenticity_token" name="csrf-param">
+</head>
+<body >
+
+<script>
+</script>
+	
+	<div class="gp-content-header fluid">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+			        <h4><img src="./assets/gplogo.png"/>Module Documentation</h4>
+                                <h1><big>ESPPredictor</big></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				
+<br/>
+<dl class="dl-horizontal">
+	<dt>LSID</dt>
+	<dd>urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00158</dd>
+	<dt>Author(s)</dt>
+	<dd>Vincent Fusaro, Broad Institute, wrapped as a module by Ted Liefeld, Mesirov Lab, UCSD School of Medicine.</dd>
+	<dt>Contact(s)</dt>
+	<dd><p>Algorithm and scientific questions: <a href="https://groups.google.com/g/genepattern-help", target="_blank">GenePattern Forum</a></p>
+	<p>Module wrapping issues:&nbsp; Ted Liefeld &nbsp;&lt; jliefeld at cloud dot ucsd dot edu&gt;</p>
+	<p>Note that this module is being provided As-Is by the GenePattern team and is no longer actively supported by Vincent Fusaro, who is no longer at the Broad Institute.</p>
+	</dd>
+</dl>
+
+<h2>Introduction</h2>
+
+<p>The Enhance Signature Peptide (ESP) predictor is a computational model to
+predict high responding peptides (i.e., peptides with a high intensity) from a given
+protein in ESI-MS. A feature set consisting of 550 physicochemical properties is
+calculated for each peptide. The feature set is then analyzed with a Random
+Forest (RF) model to calculate the probability of high response for each peptide.
+It is important to note that the probability of high response is on a per protein
+basis and is relative to other peptides within the same protein. The probability
+can be used to rank peptides in order of their response in order to select the
+highest responding peptides.</p>
+
+<h2>References</h2>
+<p>Vincent A. Fusaro, D.R. Mani, Jill P. Mesirov, Steven A. Carr. Computational
+Prediction of High Responding Peptides for Development of Targeted Protein
+Assays by Mass Spectrometry. Nature Biotechnology (2009).</p>
+
+<h2>Tool Description</h2>
+<p>The ESPPredictor module requires a list of peptide sequences. When starting
+with protein sequences they can be digested in silico using <a href="http://proteomics.broad.mit.edu/millhtml/mssluice.htm", target="_blank">Peptide Selector</a>. We tested the ESP predictor using the following settings:</p>
+
+<ul style="list-style-type:none;">
+    <li>Digest: trypsin (Note: not tested with any other enzyme)</li>
+    <li>Maximum # basic residues: 4</li>
+    <li>Minimum peptide MH+: 600</li>
+    <li>Maximum peptide MH+: 2800</li>
+    <li>Clear all “Peptide exclusion criteria” checkboxes</li>
+    <li>Delete amino acids from “AA Composition Filtering”</li>
+</ul>    
+<p>You must save the output (copy & paste usually into Excel) and then save
+peptide sequences as a separate text file. This text file can be used as input into
+the ESPPredictor module.</p>
+      
+<h3>Requirements</h3>
+
+<p>GenePattern 3.9.11 or later (dockerized).</p>
+<p>Language (included in Docker image): Matlab (bioinformatics toolbox), R (Random Forest Library)</p>
+
+<h3>Parameters</h3>
+
+<h4>Inputs</h4>
+<table class="table table-striped">
+	<tbody>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>input.file</td>
+			<td>A list of tryptic peptide sequences. One sequence per line.<br> 
+			Exclude the following non-standard amino acids: J, U, Z, B, O, X.</td>
+		</tr>
+     </tbody>
+</table>
+
+<h4>Outputs</h4>
+<table class="table table-striped">
+	
+	<tbody>
+		<tr>
+			<th>Name</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td>Predictions.txt</td>
+			<td>A list of peptide sequences with their associated predicted probability of high response.</td>
+		</tr>
+		<tr>
+			<td>PeptideFeatureSet.csv</td>
+			<td>A peptide feature file that contains 550 physicochemical properties for each peptide. The ESPPredictor module uses this file as input to the Random Forest model.</td>
+		</tr>
+     </tbody>
+</table>
+
+<h4>Note: Depending on the number of peptide sequences the module may execute in a few seconds (<20 peptides) or many hours (>1,000 peptides).</h4>
+
+<h3>Example Input</h3>
+<p><a href="https://github.com/genepattern/ESPPredictor/blob/develop/gpunit/SmallTest.txt", target="_blank">Click to download</a> or copy below</p>	
+AYLETEIK<br>
+ANFQGAITNR<br>
+LAFTGSTEVGK<br>
+TVGAALTNDPR<br>
+NAGQICSSGSR<br>
+LHFDTAEPVK<br>
+
+<h3>Example output (Prediction.txt)</h3>
+<table class="table table-striped">
+	
+	<tbody>
+		<tr>
+			<th>Sequence</th>
+			<th>ESP_Prediction</th>
+		</tr>
+		<tr>
+			<td>AYLETEIK</td>
+			<td>0.44658</td>
+		</tr>
+		<tr>
+			<td>ANFQGAITNR</td>
+			<td>0.77478</td>
+		</tr>
+		<tr>
+			<td>LAFTGSTEVGK</td>
+			<td>0.79398</td>
+		</tr>
+		<tr>
+			<td>TVGAALTNDPR</td>
+			<td>0.9486</td>
+		</tr>
+		<tr>
+			<td>LHFDTAEPVK</td>
+			<td>0.63772</td>
+		</tr>
+     </tbody>
+</table>
+
+<h3>Version Comments</h3>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Version</th>
+				<th>Release Date</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+				<tr>
+					<td>4</td>
+					<td>2020-05-01</td>
+					<td>Dockerized release</td>
+				</tr>
+				<tr>
+					<td>3</td>
+					<td>2010-10-29</td>
+					<td>Updated to use MATLAB version 2010a</td>
+				</tr>
+		</tbody>
+	</table>
+</body></html>
+
