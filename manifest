@@ -1,0 +1,27 @@
+JVMLevel=
+author=Vincent Fusaro, Broad Institute, updated by Ted Liefeld, UCSD School of Medicine.
+commandLine=sh /ESPPredictor/esp_module.sh <input.file>
+cpuType=any
+description=Determine which tryptic peptides will generate the highest signal in ESI-MS
+lsid=urn:lsid:broad.mit.edu:cancer.software.genepattern.module.analysis:00158:4
+fileFormat=csv
+language=MATLAB, R, Java
+name=ESPPredictor
+job.docker.image=genepattern/esppredictor:0.1
+os=any
+p1_MODE=IN
+p1_TYPE=FILE
+p1_default_value=
+p1_description=List of peptide sequences (one per line, no column header)
+p1_fileFormat=txt;csv
+p1_name=input.file
+p1_optional=
+p1_prefix_when_specified=
+p1_type=java.io.File
+p1_value=
+privacy=private
+quality=development
+taskType=Proteomics
+userid=GPDemo
+version=build & test with Jenkins
+
